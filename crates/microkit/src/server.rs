@@ -1,7 +1,7 @@
 use std::io;
 
 use opentelemetry::{global, trace::TracerProvider as _};
-use opentelemetry_sdk::propagation::TraceContextPropagator;
+use opentelemetry_sdk::{propagation::TraceContextPropagator, trace::SdkTracerProvider};
 use poem::{
     endpoint::BoxEndpoint,
     listener::TcpListener,
@@ -39,13 +39,12 @@ impl GrpcServer {
         T: Middleware<BoxEndpoint<'static, Response>> + 'static,
     {
         global::set_text_map_propagator(TraceContextPropagator::new());
-        let tracer_provider = opentelemetry_sdk::trace::TracerProvider::builder()
+        let tracer_provider = SdkTracerProvider::builder()
             .with_batch_exporter(
                 opentelemetry_otlp::SpanExporter::builder()
                     .with_tonic()
                     .build()
                     .expect("Trace exporter should initialize."),
-                opentelemetry_sdk::runtime::Tokio,
             )
             .build();
         let tracer = tracer_provider.tracer("gear-rs");
