@@ -53,7 +53,7 @@ impl<E: Endpoint> Endpoint for RequestDurationEndpoint<E> {
         let status = if response.is_ok() { "success" } else { "fail" };
 
         self.histogram
-            .with_label_values(&[&method, status, &caller])
+            .with_label_values(&[&*method, status, &*caller])
             .observe(duration);
 
         response
