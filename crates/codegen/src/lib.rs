@@ -21,6 +21,7 @@ pub fn build() -> Result<(), Box<dyn Error>> {
         .file_descriptor_set_path("file_descriptor_set.bin")
         .codec("poem_grpc::codec::JsonI64ToStringCodec")
         .type_attribute(".", "#[derive(serde::Deserialize, serde::Serialize)]")
+        .field_attribute(".", "#[serde(default)]")
         .client_middleware("gear_microkit::middlewares::AddClientHeaders")
         .client_middleware("gear_microkit::middlewares::ClientTracing")
         .protoc_arg("--experimental_allow_proto3_optional")
