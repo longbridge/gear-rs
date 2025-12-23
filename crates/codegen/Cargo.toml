@@ -4,4 +4,4 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-poem-grpc-build = "0.5.7"
+poem-grpc-build = "0.5.9"

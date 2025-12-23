@@ -6,8 +6,8 @@ edition = "2021"
 [dependencies]
 gear-microkit = { path = "../../crates/microkit" }
 poem = "3.1.12"
-poem-grpc = "0.5.7"
-prost = "0.13.1"
+poem-grpc = "0.5.9"
+prost = "0.14.1"
 serde = { version = "1.0.142", features = ["derive"] }
 tokio = { version = "1.38.1", features = ["macros", "rt-multi-thread"] }
 

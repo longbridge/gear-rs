@@ -6,9 +6,16 @@ service Helloworld {
   rpc SayHello(HelloRequest) returns (HelloReply);
 }
 
+enum Abc {
+  A = 0;
+  B = 1;
+  C = 2;
+}
+
 message HelloRequest {
   // Request message contains the name to be greeted
   string name = 1;
+  Abc abc = 2;
 }
 
 message HelloReply {
