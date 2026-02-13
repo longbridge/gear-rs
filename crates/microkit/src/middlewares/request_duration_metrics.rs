@@ -3,12 +3,12 @@ use std::{sync::Arc, time::Instant};
 use poem::{Endpoint, Middleware, Request, Result};
 use prometheus::{histogram_opts, register_histogram_vec, HistogramVec};
 
-pub struct RequestDurationMiddleware {
+pub(crate) struct RequestDurationMiddleware {
     histogram: Arc<HistogramVec>,
 }
 
 impl RequestDurationMiddleware {
-    pub fn new() -> Self {
+    pub(crate) fn new() -> Self {
         let opts = histogram_opts!(
             "micro_request_duration_seconds",
             "rpc method request time in seconds"
@@ -32,7 +32,7 @@ impl<E: Endpoint> Middleware<E> for RequestDurationMiddleware {
     }
 }
 
-pub struct RequestDurationEndpoint<E> {
+pub(crate) struct RequestDurationEndpoint<E> {
     inner: E,
     histogram: Arc<HistogramVec>,
 }
