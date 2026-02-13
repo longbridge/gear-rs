@@ -2,6 +2,19 @@ use poem::{http::HeaderValue, Endpoint, Middleware, Request, Result};
 
 use crate::middlewares::CurrentServiceName;
 
+/// Client-side middleware that attaches service-identifying headers to outgoing
+/// gRPC requests.
+///
+/// Two headers are injected:
+///
+/// | Header | Source | Purpose |
+/// |---|---|---|
+/// | `x-micro-service` | Extracted from the request URI path (second-to-last segment) | Identifies the **target** service being called |
+/// | `x-micro-from-service` | Read from [`CurrentServiceName`] request data (set by the server-side `SetCurrentService` middleware) | Identifies the **calling** service |
+///
+/// This middleware is typically not used directly — it is registered automatically
+/// by the code generator via
+/// [`client_middleware("gear_microkit::middlewares::AddClientHeaders")`](https://docs.rs/poem-grpc-build).
 pub struct AddClientHeaders;
 
 impl<E: Endpoint> Middleware<E> for AddClientHeaders {
@@ -12,6 +25,9 @@ impl<E: Endpoint> Middleware<E> for AddClientHeaders {
     }
 }
 
+/// The endpoint wrapper produced by [`AddClientHeaders`].
+///
+/// See [`AddClientHeaders`] for details on the headers that are injected.
 pub struct AddClientHeadersEndpoint<E> {
     inner: E,
 }
