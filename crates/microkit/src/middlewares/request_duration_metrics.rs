@@ -7,6 +7,12 @@ pub(crate) struct RequestDurationMiddleware {
     histogram: Arc<HistogramVec>,
 }
 
+impl Default for RequestDurationMiddleware {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl RequestDurationMiddleware {
     pub(crate) fn new() -> Self {
         let opts = histogram_opts!(
