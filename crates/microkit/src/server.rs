@@ -5,7 +5,7 @@ use opentelemetry_sdk::{propagation::TraceContextPropagator, trace::SdkTracerPro
 use poem::{
     endpoint::BoxEndpoint,
     listener::TcpListener,
-    middleware::{AddData, Compression, OpenTelemetryMetrics, OpenTelemetryTracing, TokioMetrics},
+    middleware::{AddData, OpenTelemetryMetrics, OpenTelemetryTracing, TokioMetrics},
     EndpointExt, IntoEndpoint, Middleware, Response, Server,
 };
 use poem_grpc::{RouteGrpc, Service};
@@ -155,7 +155,6 @@ impl GrpcServer {
             .router
             .with(
                 AddData::new(tracer.clone())
-                    .combine(Compression::new())
                     .combine(OpenTelemetryTracing::new(tracer))
                     .combine(OpenTelemetryMetrics::new())
                     .combine(SetCurrentService)
