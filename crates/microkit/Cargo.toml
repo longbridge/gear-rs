@@ -11,7 +11,11 @@ opentelemetry-http = "0.30.0"
 opentelemetry_sdk = { version = "0.30.0", features = ["rt-tokio"] }
 opentelemetry-otlp = { version = "0.30.0", features = ["trace", "grpc-tonic"] }
 opentelemetry-semantic-conventions = "0.30.0"
-poem = { version = "3.1.12", features = ["opentelemetry", "tokio-metrics"] }
+poem = { version = "3.1.12", features = [
+    "opentelemetry",
+    "tokio-metrics",
+    "compression",
+] }
 poem-grpc = { version = "0.5.9", features = ["json-codec"] }
 tokio = { version = "1.38.1", features = ["rt"] }
 prometheus = "0.14.0"
